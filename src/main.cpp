@@ -14,6 +14,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID) {
         g_hModule = hModule;
         DisableThreadLibraryCalls(hModule);
         std::thread(SetupHooks).detach();
+        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)SetupHooks, nullptr, 0, nullptr);
     }
     else if (reason == DLL_PROCESS_DETACH) {
         UnhookAll();
