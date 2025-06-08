@@ -1,5 +1,5 @@
 // src/main.cpp
-#include <Windows.h>
+#include <windows.h>
 #include <thread>
 #include "MinHook.h"
 

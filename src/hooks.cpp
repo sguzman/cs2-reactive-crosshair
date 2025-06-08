@@ -1,7 +1,7 @@
 // src/hooks.cpp
 #include <d3d11.h>
 #include <dxgi.h>
-#include <Windows.h>
+#include <windows.h>
 #include "MinHook.h"
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
