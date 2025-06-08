@@ -47,15 +47,20 @@ bool CheckCrosshairEnemy() {
 // Our hooked Present
 HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags) {
     if (!pDevice) {
-        // First-time init: grab D3D11 device/context and init ImGui
+        // First-time init: grab D3D11 device/context and actual window handle
         pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice);
         pDevice->GetImmediateContext(&pContext);
 
+        // Retrieve the real HWND from the swap chain description
+        DXGI_SWAP_CHAIN_DESC desc;
+        pSwapChain->GetDesc(&desc);
+        HWND hWnd = desc.OutputWindow;
+
+        // Now init ImGui with the correct window handle
         ImGui::CreateContext();
-        ImGui_ImplWin32_Init(FindWindowA("Valve001", nullptr));
+        ImGui_ImplWin32_Init(hWnd);
         ImGui_ImplDX11_Init(pDevice, pContext);
     }
-
     // Start new ImGui frame
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
