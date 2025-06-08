@@ -123,15 +123,3 @@ void UnhookAll() {
     MH_Uninitialize();
 }
 
-// DllMain to spawn our hook thread
-BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, LPVOID) {
-    if (reason == DLL_PROCESS_ATTACH) {
-        DisableThreadLibraryCalls(hMod);
-        std::thread(SetupHooks).detach();
-    }
-    else if (reason == DLL_PROCESS_DETACH) {
-        UnhookAll();
-    }
-    return TRUE;
-}
-
