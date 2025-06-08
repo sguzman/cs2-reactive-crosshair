@@ -84,7 +84,12 @@ void SetupHooks() {
     void* presentAddr = vtable[8];
 
     // Hook it
-    MH_CreateHook(presentAddr, hkPresent, reinterpret_cast<void**>(&oPresent));
+    MH_CreateHook(
+      presentAddr,
+      reinterpret_cast<LPVOID>(hkPresent),       // <-- cast your detour
+      reinterpret_cast<void**>(&oPresent)
+    );
+
     MH_EnableHook(presentAddr);
 
     // cleanup dummy
